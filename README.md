@@ -1,2 +1,2 @@
 # flask-app
-demo flask app with github actions
+A demo flask-app with Github-actions
