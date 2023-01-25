@@ -1,14 +1,12 @@
-# This is a workflow that builds the container and pushes it to dockerhub
+# This is a workflow that builds the container and pushes it to Dockerhub
 
-name: build to Dockerhub
+name: Build to Dockerhub
 
 # Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-   push:
+  push:
     branches: [ main ]
-#  pull_request:
-#    branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -23,25 +21,25 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Check out the flask-app repo 
+      - name: Check out the flask-app repo
         uses: actions/checkout@v2
 
-      - name: Authenticate to dockerhub
+      - name: Authenticate to Docker hub
         uses: docker/login-action@v1
         with:
-                username: ${{secrets.DOCKER_HUB_USERNAME }}
-                PASSWORD: ${{secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Setup Docker buildx  
+      - name: Setup Docker buildx
         uses: docker/setup-buildx-action@v1
         id: buildx
-      
+
       - name: build flask-app and push to dockerhub
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-                context: ./
-                file: ./Dockerfile
-                push: true
-                tags: abhipapanur/flask-app:latest
+          context: ./
+          file: ./Dockerfile
+          push: true
+          tags: abhipapanur/flask-app:latest
     
